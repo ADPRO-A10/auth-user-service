@@ -1,24 +1,16 @@
-FROM docker.io/library/eclipse-temurin:21-jdk-alpine AS builder
+FROM gradle:jdk21-alpine
+ARG PRODUCTION
+ARG JDBC_DATABASE_PASSWORD
+ARG JDBC_DATABASE_URL
+ARG JDBC_DATABASE_USERNAME
 
-WORKDIR /src/auth-user-service
-COPY . .
-RUN chmod +x ./gradlew
-RUN ./gradlew clean bootjar
+ENV PRODUCTION ${PRODUCTION}
+ENV JDBC_DATABASE_PASSWORD ${JDBC_DATABASE_PASSWORD}
+ENV JDBC_DATABASE_URL ${JDBC_DATABASE_URL}
+ENV JDBC_DATABASE_USERNAME ${JDBC_DATABASE_USERNAME}
 
-FROM docker.io/library/eclipse-temurin:21-jre-alpine AS runner
-
-ARG USER_NAME=auth-user-service
-ARG USER_UID=1000
-ARG USER_GID=${USER_UID}
-
-RUN addgroup -g ${USER_GID} ${USER_NAME} \
-&& adduser -h /opt/auth-user-service -D -u ${USER_UID} -G ${USER_NAME} ${USER_NAME}
-
-USER ${USER_NAME}
-WORKDIR /opt/auth-user-service
-COPY --from=builder --chown=${USER_UID}:${USER_GID} /src/eshop/build/libs/*.jar app.jar
-
+WORKDIR /app
+COPY ./auth*-0.0.1-SNAPSHOT.jar /app
+RUN ls -la
 EXPOSE 8080
-
-ENTRYPOINT ["java"]
-CMD ["-jar", "app.jar"]
+CMD ["java","-jar","auth-user-service-0.0.1-SNAPSHOT.jar"]
