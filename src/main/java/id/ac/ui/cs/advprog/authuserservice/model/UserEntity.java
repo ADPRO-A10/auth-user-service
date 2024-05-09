@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class User {
+public class UserEntity {
     private Long userId;
     private String firstName;
     private String lastName;
@@ -21,7 +21,7 @@ public class User {
     private String profilePhoto;
     private double balance;
 
-    private User(Builder builder) {
+    private UserEntity(Builder builder) {
         this.userId = builder.userId;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
@@ -110,8 +110,8 @@ public class User {
             return this;
         }
 
-        public User build() {
-            return new User(this);
+        public UserEntity build() {
+            return new UserEntity(this);
         }
     }
 }
