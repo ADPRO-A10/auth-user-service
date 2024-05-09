@@ -8,7 +8,6 @@ import java.time.LocalDate;
 
 import static org.mockito.ArgumentMatchers.any;
 
-import org.checkerframework.checker.units.qual.t;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@DataJpaTest
 public class UserTest {
 
     @Mock
@@ -24,7 +22,7 @@ public class UserTest {
 
     @Test
     public void testCreateUser() {
-        User user = new User.Builder()
+        UserEntity user = new UserEntity.Builder()
                     .setActive(true)
                     .setBalance(1000)
                     .setBio("Lorem Ipsum")
