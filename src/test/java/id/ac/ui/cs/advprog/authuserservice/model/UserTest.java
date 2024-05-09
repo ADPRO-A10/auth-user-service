@@ -3,54 +3,53 @@ package id.ac.ui.cs.advprog.authuserservice.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+
 import static org.mockito.ArgumentMatchers.any;
 
+import org.checkerframework.checker.units.qual.t;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import id.ac.ui.cs.repository.UserRepository;
-import id.ac.ui.cs.service.UserService;
-import id.ac.ui.cs.service.UserServiceImpl;
-import id.ac.ui.cs.model.UserRepository;
 
 @DataJpaTest
 public class UserTest {
 
     @Mock
-    private UserRepository userRepository;
-
-    @Mock
     private PasswordEncoder passwordEncoder;
-
-    @InjectMocks // auto inject userRepository
-    private UserServiceImpl userService;
 
     @Test
     public void testCreateUser() {
-        // Arrange
-        User mockUser = new User();
-        mockUser.setFirstName("Vax");
-        mockUser.setLastName("Merstappen");
-        mockUser.setEmail("vm33@example.com");
-        mockUser.setUsername("vm33");
-        mockUser.setPassword("12345678");
+        User user = new User.Builder()
+                    .setActive(true)
+                    .setBalance(1000)
+                    .setBio("Lorem Ipsum")
+                    .setCreatedAt(LocalDate.of(2024, 3, 1))
+                    .setEmail("mymail@gmail.com")
+                    .setFirstName("Max")
+                    .setLastName("Verstappen")
+                    .setPassword("password")
+                    .setProfilePhoto("photo.jpg")
+                    .setRole("USER")
+                    .setUserId(1L)
+                    .setUsername("mv1")
+                    .build();
 
-        // Password encoding
-        when(passwordEncoder.encode(mockUser.getPassword())).thenReturn("12345678");
-
-        when(userRepository.save(any(User.class))).thenReturn(mockUser);
-
-        User createdUser = userService.create(mockUser.getFirstName(),
-                mockUser.getLastName(),
-                mockUser.getEmail(),
-                mockUser.getUsername(),
-                mockUser.getPassword());
-
-        // Assert
-        assertEquals(mockUser.getUsername(), createdUser.getUsername());
-        assertEquals("12345678", createdUser.getPassword());
+        assertEquals(true, user.isActive());
+        assertEquals(1000, user.getBalance());
+        assertEquals("Lorem Ipsum", user.getBio());
+        assertEquals(LocalDate.of(2024, 3, 1), user.getCreatedAt());
+        assertEquals("mymail@gmail.com", user.getEmail());
+        assertEquals("Max", user.getFirstName());
+        assertEquals("Verstappen", user.getLastName());
+        assertEquals("password", user.getPassword());
+        assertEquals("photo.jpg", user.getProfilePhoto());
+        assertEquals("USER", user.getRole());
+        assertEquals(1L, user.getUserId());
+        assertEquals("mv1", user.getUsername());
     }
 }
