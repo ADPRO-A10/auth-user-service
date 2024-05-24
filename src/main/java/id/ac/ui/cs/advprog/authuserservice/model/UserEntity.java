@@ -5,8 +5,11 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+
 @Getter
 @Setter
+@Entity
 public class UserEntity {
     private Long userId;
     private String firstName;

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,9 @@ import id.ac.ui.cs.advprog.authuserservice.model.UserEntity;
 
 @Component
 @Repository
-public class UserRepository {
+public interface UserRepository extends CrudRepository<UserEntity, Long> {
+    UserEntity findByUsername(String username);
+
     private final List<UserEntity> userList = new ArrayList<>();
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -93,5 +96,4 @@ public class UserRepository {
         }
         return null;
     }
-    
 }

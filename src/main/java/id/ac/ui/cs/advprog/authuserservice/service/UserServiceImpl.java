@@ -24,15 +24,15 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
     @Override
     public UserEntity createUser(UserEntity user) {
-        userRepository.createUser(user);
+        userRepository.save(user);
         return user;
     }
 
     @Override
     public List<UserEntity> findAllUser() {
-        Iterator<UserEntity> userIterator = userRepository.findAllUser();
+        Iterable<UserEntity> userIterator = userRepository.findAll();
         List<UserEntity> allUser = new ArrayList<>();
-        userIterator.forEachRemaining(allUser::add);
+        // userIterator.forEachRemaining(allUser::add);
         return allUser;
     }
 
@@ -42,7 +42,8 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     }
 
     @Override
-    public void updateUser(String userId, UserEntity user) {
+    public void updateUser(Long userId, UserEntity user) {
+
         userRepository.update(userId, user);
     }
 

@@ -8,5 +8,5 @@ public interface UserService {
     public UserEntity createUser(UserEntity user);
     public List<UserEntity> findAllUser();
     UserEntity findByUsername(String username);
-    public void updateUser(String userId, UserEntity user);
+    public void updateUser(Long userId, UserEntity user);
 }

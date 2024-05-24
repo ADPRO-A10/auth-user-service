@@ -34,6 +34,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     compileOnly ("javax.servlet:javax.servlet-api:4.0.1")
     implementation("io.jsonwebtoken:jjwt:0.2")
+    implementation("org.postgresql:postgresql")
 }
 
 tasks.withType<Test> {
