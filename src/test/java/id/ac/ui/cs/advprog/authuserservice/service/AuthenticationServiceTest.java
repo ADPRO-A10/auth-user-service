@@ -3,7 +3,6 @@ package id.ac.ui.cs.advprog.authuserservice.service;
 import id.ac.ui.cs.advprog.authuserservice.dto.AuthenticationRequest;
 import id.ac.ui.cs.advprog.authuserservice.dto.AuthenticationResponse;
 import id.ac.ui.cs.advprog.authuserservice.dto.RegisterRequest;
-import id.ac.ui.cs.advprog.authuserservice.exceptions.UserAlreadyExistException;
 import id.ac.ui.cs.advprog.authuserservice.model.auth.User;
 import id.ac.ui.cs.advprog.authuserservice.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-public class AuthenticationServiceTest {
+class AuthenticationServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -43,7 +42,7 @@ public class AuthenticationServiceTest {
     }
 
     @Test
-    public void testRegister() {
+    void testRegister() {
         RegisterRequest request = new RegisterRequest();
         request.setFirstname("John");
         request.setLastname("Doe");
@@ -70,7 +69,7 @@ public class AuthenticationServiceTest {
     }
 
     @Test
-    public void testAuthenticate() {
+    void testAuthenticate() {
         AuthenticationRequest request = new AuthenticationRequest();
         request.setEmail("john.doe@example.com");
         request.setPassword("password");
