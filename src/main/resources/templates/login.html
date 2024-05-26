@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h2>Login</h2>
+    <form th:action="@{/login}" th:object="${authenticationRequest}" method="post" class="form-horizontal">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" th:field="*{password}">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+</body>
+</html>
