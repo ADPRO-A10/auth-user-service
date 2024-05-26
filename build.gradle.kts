@@ -6,11 +6,12 @@ plugins {
     id("org.sonarqube") version "4.4.1.3373"
 }
 
-sonar {
+sonarqube {
     properties {
         property("sonar.projectKey", "ADPRO-A10_auth-user-service")
         property("sonar.organization", "adpro-a10")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.login", System.getenv("SONAR_TOKEN"))
     }
 }
 
