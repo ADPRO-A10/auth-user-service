@@ -31,8 +31,8 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Build and run tests
         run: chmod +x ./gradlew && ./gradlew test jacocoTestReport
-      - name: Build and analyze
+      - name: SonarCloud Scan
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: chmod +x ./gradlew && ./gradlew build sonar --info
+        run: chmod +x ./gradlew && ./gradlew sonarqube --info
