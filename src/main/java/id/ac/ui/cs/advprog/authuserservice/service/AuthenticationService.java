@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.authuserservice.service;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +13,8 @@ import id.ac.ui.cs.advprog.authuserservice.exceptions.UserAlreadyExistException;
 import id.ac.ui.cs.advprog.authuserservice.model.auth.User;
 import id.ac.ui.cs.advprog.authuserservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +58,11 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
+    }
+
+    @Async
+    public CompletableFuture<AuthenticationResponse> registerAsync(RegisterRequest request) {
+        return CompletableFuture.supplyAsync(() -> register(request));
     }
 
 }

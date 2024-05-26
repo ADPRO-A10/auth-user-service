@@ -12,6 +12,8 @@ import id.ac.ui.cs.advprog.authuserservice.dto.RegisterRequest;
 import id.ac.ui.cs.advprog.authuserservice.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 
+import java.util.concurrent.CompletableFuture;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -20,10 +22,9 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register (
-            @RequestBody RegisterRequest request
-    ) {
-        return ResponseEntity.ok(authenticationService.register(request));
+    public CompletableFuture<ResponseEntity<AuthenticationResponse>> register(@RequestBody RegisterRequest request) {
+        return authenticationService.registerAsync(request)
+                .thenApply(ResponseEntity::ok);
     }
 
     @PostMapping("/login")
